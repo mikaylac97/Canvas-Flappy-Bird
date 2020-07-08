@@ -3,3 +3,10 @@ canvas {
     display: block;
     margin: 0 auto;
 }
+
+img {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}

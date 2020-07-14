@@ -1,0 +1,57 @@
+html, head, body, div, button {
+    font-family: 'Teko', sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   
+
+}
+
+
+html {
+    background-image: url('./images/flappy-bird.gif');
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-color: #48C4CC;
+}
+
+body h1 {
+    font-size: 80px;
+    color: green;
+    margin-left: 20px;
+    -webkit-text-stroke: .05px white;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+body p {
+    width: 40%;
+    font-size: 30px;
+    margin: 0 auto;
+}
+
+body ul {
+    list-style-type: none;
+    font-size: 25px;
+}
+
+body div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+body button {
+    margin: 0px 0px 0px 30px;
+    padding: 20px;
+}
+
+body a {
+    text-decoration: none;
+    font-size: 30px;
+    color: orange;
+    font-style: oblique;
+    -webkit-text-stroke: .5px black;
+}

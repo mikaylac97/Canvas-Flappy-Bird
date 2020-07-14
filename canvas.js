@@ -3,6 +3,9 @@
 const canvas = document.getElementById('bird');
 const ctx = canvas.getContext('2d');
 
+// LOCAL STORAGE
+
+
 // GAME VARIABLES 
 
 let frames = 0;
@@ -38,14 +41,15 @@ document.addEventListener('keypress', event => {
 
 canvas.addEventListener('click', event => {  
     // console.log(event.pageX, event.pageY)
-    const px = event.pageX;
-    const py = event.pageY;
+    const screen = canvas.getBoundingClientRect();
+    let clickX = event.clientX - screen.left;
+    let clickY = event.clientY - screen.top;
     if(event.target){
         if(state.current === state.over 
-            && px >= 190
-            && px <= 280
-            && py >= 360
-            && py <= 390
+            && clickX >= startBtn.x 
+            && clickX <= startBtn.x + startBtn.w
+            && clickY >= startBtn.y
+            && clickY <= startBtn.y + startBtn.h
             ){
             faby.speed = 0;
             pipes.position = []; 
@@ -202,15 +206,56 @@ const pipes = {
 // START BTN
 
 const startBtn = {
-    sX: 244,
-    sY: 398,
+    x: 120,
+    y: 263,
     w: 86,
     h: 30
 }
 
+// MEDALS
+
+const medals = {
+    bronze: {
+        sX: 358,
+        sY: 158, 
+    },
+    silver: {
+        sX: 310,
+        sY: 111
+    },
+    gold: {
+        sX: 310,
+        sY: 159,
+    },
+    platinum: {
+        sX: 356,
+        sY: 113
+    },
+    w: 48,
+    h: 45,
+    draw: function(){
+    if(state.current === state.over){
+        if(score.best >= 10 && score.best < 20){
+        ctx.drawImage(sprite, this.bronze.sX, this.bronze.sY, this.w, this.h, 70, 175, this.w, this.h);
+        } if(score.best >= 20 && score.best < 30){
+        ctx.drawImage(sprite, this.silver.sX, this.silver.sY, this.w, this.h, 70, 175, this.w, this.h);
+        } if(score.best >= 30 && score.best < 40){
+        ctx.drawImage(sprite, this.gold.sX, this.gold.sY, this.w, this.h, 70, 175, this.w, this.h);
+        } if(score.best >= 40){
+        ctx.drawImage(sprite, this.platinum.sX, this.platinum.sY, this.w, this.h, 70, 175, this.w, this.h);
+        }
+      }
+    }
+
+    
+}
+
+
+
 // SCORE
 
 const score = {
+    best: 0,
     value: 0,
     draw: function(){
         ctx.fillStyle = "white";
@@ -222,7 +267,13 @@ const score = {
             ctx.font = "25px Teko";
             ctx.fillText(this.value, gameOver.x+180, 185);
             ctx.strokeText(this.value, gameOver.x+180, 185);
-            
+            ctx.fillText(this.best, gameOver.x+180, 227);
+            ctx.strokeText(this.best, gameOver.x+180, 227);
+        }
+    },
+    highScore: function(){
+        if(this.value > this.best){
+            this.best = this.value;
         }
     }
 }
@@ -280,6 +331,7 @@ function draw() {
     getReady.draw();
     gameOver.draw();
     score.draw();
+    medals.draw();
 
 }
 
@@ -289,7 +341,7 @@ function update(){
     faby.update();
     fg.update();
     pipes.update();
-    // score.update();
+    score.highScore();
     
 }
 
